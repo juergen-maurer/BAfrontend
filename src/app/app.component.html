@@ -1,0 +1,11 @@
+<nav class="app-navbar">
+  <a href="/" class="nav-link">Produkte</a>
+  <input type="text" [(ngModel)]="searchTerm" (keydown)="onSearchTermChange($event)" placeholder="Produkte suchen..." class="search-input">
+  <a href="/cart" class="nav-link">Warenkorb</a>
+</nav>
+<main class="app-content">
+  <router-outlet></router-outlet>
+</main>
+<footer class="app-footer">
+  © 2023 Mein Shop
+</footer>

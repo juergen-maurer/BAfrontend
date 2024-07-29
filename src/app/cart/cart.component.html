@@ -1,0 +1,24 @@
+<app-notification [message]="notificationMessage"></app-notification>
+<div class="cart-container">
+  <h2>Warenkorb</h2>
+  <div *ngIf="cart.length === 0" class="empty-cart-message">
+    Ihr Warenkorb ist leer.
+  </div>
+  <div class="cart-item-list">
+    <div class="cart-item" *ngFor="let product of cart">
+      <img src="{{product.imageUrl}}" alt="{{product.name}}">
+      <div class="cart-item-title">{{product.name}}</div>
+      <div class="cart-item-price">{{product.price | currency:'EUR'}}</div>
+      <input type="number" [(ngModel)]="product.quantity" (focus)="saveOriginalQuantity(product)" (blur)="updateQuantityIfChanged(product)" min="1">
+      <button (click)="removeFromCart(product)">X</button>
+    </div>
+  </div>
+  <div style="text-align: left;">
+    <div class="cart-actions" style="display: flex; justify-content: space-between; align-items: center;">
+      <button class="clear-cart" (click)="clearCart()" [disabled]="cart.length === 0">Warenkorb leeren</button>
+      <div *ngIf="cart.length > 0" class="total-value" style="font-size: 0.9rem;">
+        Gesamtwert: {{ getTotalCartValue() | currency:'EUR' }}
+      </div>
+    </div>
+  </div>
+</div>

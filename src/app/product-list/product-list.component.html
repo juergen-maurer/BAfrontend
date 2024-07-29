@@ -1,0 +1,30 @@
+<app-notification [message]="notificationMessage"></app-notification>
+<div class="filters-container">
+  <div class="filter-section">
+    <select id="categorySelect" [(ngModel)]="selectedCategory" (change)="filterProducts(selectedCategory, selectedPriceRange)">
+      <option value="">Alle Kategorien</option>
+      <option *ngFor="let category of categories" [value]="category">{{category | enumFormatter}}</option>
+    </select>
+  </div>
+  <div class="price-filter-section">
+    <select id="priceSelect" [(ngModel)]="selectedPriceRange" (change)="filterProducts(selectedCategory, selectedPriceRange)">
+      <option value="">Alle Preise</option>
+      <option value="0-10">Unter 10€</option>
+      <option value="0-25">Unter 25€</option>
+      <option value="0-50">Unter 50€</option>
+      <option value="0-100">Unter 100€</option>
+      <option value="100-">Über 100€</option>
+    </select>
+  </div>
+</div>
+<div *ngIf="filteredProducts.length === 0" class="no-products-message">
+  Unter den aktuellen Filtereinstellungen wurden keine Produkte gefunden.
+</div>
+<div class="product-list">
+  <div class="product-card" *ngFor="let product of filteredProducts">
+    <img class="product-image" src="{{product.imageUrl}}" alt="{{product.name}}">
+    <div class="product-name">{{product.name}}</div>
+    <div class="product-price">{{product.price | currency:'EUR'}}</div>
+    <button (click)="addToCart(product)">In den Warenkorb</button>
+  </div>
+</div>
