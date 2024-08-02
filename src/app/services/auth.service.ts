@@ -3,29 +3,56 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {User} from "../User";
-
+import {HttpHeaders} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://localhost:8080';
+  private apiUrl = 'http://localhost:8080/api/users';
 
   constructor(private http: HttpClient) { }
 
-  register(user: User): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/register`, user);
-  }
+  //register(user: User): Observable<{ token: string, firstName: string, lastName: string }> {
+  //  return this.http.post<{ token: string, firstName: string, lastName: string }>(`${this.apiUrl}/register`, user);
+  //}
 
-  login(credentials: { email: string, password: string }): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, credentials);
+  register(user: User): Observable<{ token: string, firstName: string, lastName: string }> {
+    return this.http.post<{ token: string, firstName: string, lastName: string }>(`${this.apiUrl}/register`, user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      })
+    });
   }
+  //login(credentials: { email: string, password: string }): Observable<{ token: string, firstName: string, lastName: string }> {
+  //  return this.http.post<{ token: string, firstName: string, lastName: string }>(`${this.apiUrl}/login`, credentials);
+  //}
 
+  login(credentials: { email: string, password: string }): Observable<{ token: string, firstName: string, lastName: string, email:string }> {
+    return this.http.post<{ token: string, firstName: string, lastName: string, email:string }>(`${this.apiUrl}/login`, credentials, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      })
+    });
+  }
   getProfile(): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/profile`);
   }
 
   updateProfile(user: User): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/profile`, user);
+  }
+  //logout(): Observable<void> {
+  //  return this.http.post<void>(`${this.apiUrl}/logout`, {});
+  //}
+  logout(): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/logout`, {}, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      })
+    });
   }
 }

@@ -1,0 +1,23 @@
+<!-- src/app/login/login.component.html -->
+<div class="login-container">
+  <h2 *ngIf="isRegistering">Register</h2>
+  <h2 *ngIf="!isRegistering">Login</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div *ngIf="isRegistering">
+      <label for="firstName">Vorname:</label>
+      <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName" required>
+      <label for="lastName">Nachname:</label>
+      <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName" required>
+    </div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" [(ngModel)]="email" name="email" required>
+    <label for="password">Password:</label>
+    <input type="password" id="password" [(ngModel)]="password" name="password" required>
+    <button type="submit">{{ isRegistering ? 'Register' : 'Login' }}</button>
+  </form>
+  <button (click)="toggleMode()">
+    {{ isRegistering ? 'Already have an account? Login' : 'Don\'t have an account? Register' }}
+  </button>
+</div>
+
+
