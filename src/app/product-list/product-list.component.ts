@@ -23,14 +23,12 @@ export class ProductListComponent implements OnInit {
   selectedPriceRange: string = "";
   notificationMessage: string = "";
   searchTerm: string = '';
-  searchSubscription: Subscription | null = null;
 
   constructor(
     private productService: ProductService,
     private cartService: CartService,
     private searchService: SearchService,
     private route:ActivatedRoute,
-    private appComponent: AppComponent
   ) { }
 
   ngOnInit() {
