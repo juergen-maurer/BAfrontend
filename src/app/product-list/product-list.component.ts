@@ -4,10 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { Product } from '../product';
 import {ProductService} from "../services/product.service";
-import {Subscription} from "rxjs";
 import {SearchService} from "../services/search.service";
 import {ActivatedRoute} from "@angular/router";
-import {AppComponent} from "../app.component";
 
 
 @Component({
