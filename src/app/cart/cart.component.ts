@@ -15,6 +15,8 @@ export class CartComponent implements OnInit {
   notificationMessage: string = '';
   productId: number = 0;
   searchTerm: string = '';
+  warenkorbIdStr: string | null = null;
+  warenkorbId: number | null = null
 
   constructor(private cartService: CartService, private searchService: SearchService) {
   }
@@ -30,7 +32,16 @@ export class CartComponent implements OnInit {
   // Adjust the loadCartDetails method in CartComponent to use the updated getCartDetails method
 
   loadCartDetails() {
-    this.cartService.getCartDetails().subscribe({
+    this.warenkorbIdStr = localStorage.getItem('warenkorbId');
+    this.warenkorbId = this.warenkorbIdStr !== null ? parseInt(this.warenkorbIdStr, 10) : null;
+
+    if (this.warenkorbId === null || isNaN(this.warenkorbId)) {
+      console.error('Invalid warenkorbId:', this.warenkorbIdStr);
+    } else {
+      console.log('Converted Long:', this.warenkorbId);
+    }
+
+    this.cartService.getCartDetails(this.warenkorbId).subscribe({
       next: (response) => {
         this.cart = response.cartItems.map(item => ({
           ...item.product,
@@ -46,7 +57,7 @@ export class CartComponent implements OnInit {
 
 
   clearCart(): void {
-    this.cartService.clearCart();
+    this.cartService.clearCart(this.warenkorbId);
     this.cart = [];
     this.notificationMessage = 'Der Warenkorb wurde geleert!';
     setTimeout(() => this.notificationMessage = '', 3000); // Hide message after 3 seconds
@@ -62,7 +73,7 @@ export class CartComponent implements OnInit {
       this.cart.splice(productIndex, 1);
     }
     // Aufrufen der removeFromCart Methode im Service, um das Produkt backendseitig zu entfernen
-    this.cartService.removeFromCart(this.productId);
+    this.cartService.removeFromCart(this.productId, this.warenkorbId);
     this.notificationMessage = `${product.name} wurde aus dem Warenkorb entfernt!`;
     setTimeout(() => this.notificationMessage = '', 3000); // Hide message after 3 seconds
   }
@@ -77,7 +88,7 @@ export class CartComponent implements OnInit {
       }
       return;
     }
-    this.cartService.updateQuantity(productId, quantity);
+    this.cartService.updateQuantity(productId, quantity, this.warenkorbId);
   }
 
   saveOriginalQuantity(product: Product): void {

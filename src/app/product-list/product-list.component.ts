@@ -7,6 +7,7 @@ import {ProductService} from "../services/product.service";
 import {Subscription} from "rxjs";
 import {SearchService} from "../services/search.service";
 import {ActivatedRoute} from "@angular/router";
+import {AppComponent} from "../app.component";
 
 
 @Component({
@@ -29,6 +30,7 @@ export class ProductListComponent implements OnInit {
     private cartService: CartService,
     private searchService: SearchService,
     private route:ActivatedRoute,
+    private appComponent: AppComponent
   ) { }
 
   ngOnInit() {
@@ -39,29 +41,16 @@ export class ProductListComponent implements OnInit {
       this.route.queryParams.subscribe(params => {
         this.searchTerm = params['search'] || "";
         this.filterProducts(this.selectedCategory, this.selectedPriceRange);
-        //this.searchProducts();
       });
     });
-
-    /*this.searchSubscription = this.searchService.getSearchTerm().subscribe(term => {
-      this.searchTerm = term;
-      this.filterProducts(this.selectedCategory, this.selectedPriceRange);
-    });*/
   }
 
-  ngOnDestroy(): void {
-    if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
-    }
-  }
   extractCategories(): void {
     const categorySet = new Set(this.products.map(product => product.category));
     this.categories = Array.from(categorySet);
   }
 
-  searchProducts(): void {
-    this.filterProducts(this.selectedCategory, this.selectedPriceRange);
-  }
+
   filterProducts(selectedCategory: string, selectedPriceRange: string) {
     let minPrice = 0;
     let maxPrice = Infinity;
@@ -83,7 +72,15 @@ export class ProductListComponent implements OnInit {
     });
   }
   addToCart(product: Product): void {
-    this.cartService.addToCart(product.id).subscribe({
+    const warenkorbIdStr = localStorage.getItem('warenkorbId');
+    const warenkorbId = warenkorbIdStr !== null ? parseInt(warenkorbIdStr, 10) : null;
+
+    if (warenkorbId === null || isNaN(warenkorbId)) {
+      console.error('Invalid warenkorbId:', warenkorbIdStr);
+    } else {
+      console.log('Converted Long:', warenkorbId);
+    }
+    this.cartService.addToCart(product.id, 1, warenkorbId).subscribe({
       next: (response) => {
         this.notificationMessage = `${product.name} wurde erfolgreich in den Warenkorb gelegt!`;
         setTimeout(() => this.notificationMessage = '', 3000); // Hide message after 3 seconds

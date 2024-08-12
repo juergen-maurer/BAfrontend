@@ -2,7 +2,7 @@
   <a href="/" class="nav-link">Produkte</a>
   <input type="text" [(ngModel)]="searchTerm" (keydown)="onSearchTermChange($event)" placeholder="Produkte suchen..." class="search-input">
   <button *ngIf="!firstName" (click)="navigateToLogin()" class="nav-link">Login</button>
-  <span *ngIf="firstName" class="nav-link">{{ firstName }} {{ lastName }}</span>
+  <span *ngIf="firstName" class="nav-link"> Willkommen, {{ firstName }}</span>
   <button *ngIf="firstName" (click)="logout()" class="nav-link">Logout</button>
   <a href="/cart" class="nav-link">Warenkorb</a>
 </nav>
