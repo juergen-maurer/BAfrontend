@@ -10,12 +10,11 @@ import {Router} from "@angular/router";
 })
 export class AppComponent implements OnInit {
   searchTerm: string = '';
-  selectedCategory: string = '';
-  categories: string[] = ['Elektronik', 'Kleidung', 'Haushalt'];
   firstName: string | null = null;
   lastName: string | null = null;
   warenkorbId: number | null = null;
-
+  isDropdownVisible: boolean = false;
+  isLoggedIn: boolean = false;
 
   constructor(private searchService: SearchService, private router:Router) {
    this.updateUserDetails();
@@ -23,10 +22,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     // Initialisierungslogik hier
-    console.log(localStorage.getItem('token'));
-    console.log(localStorage.getItem('firstName'));
-    console.log(localStorage.getItem('lastName'));
-    console.log(localStorage.getItem('warenkorbId'));
+    this.checkLoginStatus();
+  }
+  checkLoginStatus(): void {
+    this.isLoggedIn = !!localStorage.getItem('firstName');
   }
 
   updateUserDetails(): void {
@@ -45,14 +44,19 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  navigateToProfile(): void {
+    this.router.navigate(['/profile']);
+  }
+
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('firstName');
     localStorage.removeItem('lastName');
     localStorage.removeItem('warenkorbId');
-    this.firstName = null;
-    this.lastName = null;
+    this.updateUserDetails();
     this.router.navigate(['/login']);
   }
-
+  toggleDropdown(): void {
+    this.isDropdownVisible = !this.isDropdownVisible;
+  }
 }

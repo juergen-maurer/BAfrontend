@@ -16,6 +16,7 @@ export class LoginComponent {
   firstName: string = '';
   lastName: string = '';
   isRegistering: boolean = false;
+  errorMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router, private appComponent: AppComponent) {}
 
@@ -40,7 +41,13 @@ export class LoginComponent {
           this.appComponent.updateUserDetails();
           this.router.navigate(['/']);
         },
-        error => console.error('Registration error', error)
+        error => {
+          if (error.status === 409) {
+            this.errorMessage = 'Email address already in use';
+          } else {
+            this.errorMessage = 'An error occurred during registration';
+          }
+        }
       );
     } else {
       const credentials = { email: this.email, password: this.password };
@@ -53,7 +60,13 @@ export class LoginComponent {
           this.appComponent.updateUserDetails();
           this.router.navigate(['/']);
         },
-        error => console.error('Login error', error)
+        error => {
+          if (error.status === 401) {
+            this.errorMessage = 'Invalid email or password';
+          } else {
+            this.errorMessage = 'An error occurred during registration';
+          }
+        }
       );
     }
   }

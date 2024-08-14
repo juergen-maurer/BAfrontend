@@ -5,7 +5,8 @@ import { CartService } from '../services/cart.service';
 import { Product } from '../product';
 import {ProductService} from "../services/product.service";
 import {SearchService} from "../services/search.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {AuthService} from "../services/auth.service";
 
 
 @Component({
@@ -27,6 +28,8 @@ export class ProductListComponent implements OnInit {
     private cartService: CartService,
     private searchService: SearchService,
     private route:ActivatedRoute,
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -68,6 +71,9 @@ export class ProductListComponent implements OnInit {
     });
   }
   addToCart(product: Product): void {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    } else {
     const warenkorbIdStr = localStorage.getItem('warenkorbId');
     const warenkorbId = warenkorbIdStr !== null ? parseInt(warenkorbIdStr, 10) : null;
 
@@ -88,6 +94,7 @@ export class ProductListComponent implements OnInit {
         // Behandeln Sie Fehler, z.B. durch Anzeigen einer Fehlermeldung
       }
     });
+  }
   }
 
 }
