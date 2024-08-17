@@ -2,7 +2,7 @@
   <a href="/" class="nav-link">Produkte</a>
   <input type="text" [(ngModel)]="searchTerm" (keydown)="onSearchTermChange($event)" placeholder="Produkte suchen..." class="search-input">
   <button *ngIf="!firstName" (click)="navigateToLogin()" class="nav-link">Login</button>
-  <div *ngIf="firstName" class="welcome" (click)="toggleDropdown()">
+  <div *ngIf="firstName" class="nav-link" (click)="toggleDropdown()">
     Willkommen, {{ firstName }}
     <span class="dropdown-arrow">&#9662;</span>
     <div *ngIf="isDropdownVisible" class="dropdown-menu">

@@ -34,7 +34,7 @@ export class LoginComponent {
       };
       this.authService.register(newUser).subscribe(
         response => {
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('kundenId', response.kundenId);
           localStorage.setItem('firstName', response.firstName);
           localStorage.setItem('lastName', response.lastName);
           localStorage.setItem('warenkorbId', response.warenkorbId);
@@ -51,8 +51,11 @@ export class LoginComponent {
       );
     } else {
       const credentials = { email: this.email, password: this.password };
+      console.log(credentials);
       this.authService.login(credentials).subscribe(
         response => {
+          localStorage.setItem('kundenId', response.kundenId);
+          console.log('kundenId:', response.kundenId, localStorage.getItem('kundenId'));
           localStorage.setItem('firstName', response.firstName);
           localStorage.setItem('lastName', response.lastName);
           localStorage.setItem('email', response.email);
@@ -71,12 +74,4 @@ export class LoginComponent {
     }
   }
 
-  logout(): void {
-    this.authService.logout().subscribe(() => {
-      localStorage.removeItem('token');
-      localStorage.removeItem('firstName');
-      localStorage.removeItem('lastName');
-      this.router.navigate(['/login']);
-    });
-  }
 }

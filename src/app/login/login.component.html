@@ -1,26 +1,32 @@
 <!-- src/app/login/login.component.html -->
 <div class="login-container">
-  <h2 *ngIf="isRegistering">Register</h2>
-  <h2 *ngIf="!isRegistering">Login</h2>
-  <form (ngSubmit)="onSubmit()">
-    <div *ngIf="isRegistering">
-      <label for="firstName">Vorname:</label>
-      <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName" required>
-      <label for="lastName">Nachname:</label>
-      <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName" required>
-    </div>
-    <label for="email">Email:</label>
-    <input type="email" id="email" [(ngModel)]="email" name="email" required>
-    <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
-    </div>
-    <label for="password">Password:</label>
-    <input type="password" id="password" [(ngModel)]="password" name="password" required>
-    <button type="submit">{{ isRegistering ? 'Register' : 'Login' }}</button>
-  </form>
-  <button (click)="toggleMode()">
-    {{ isRegistering ? 'Already have an account? Login' : 'Don\'t have an account? Register' }}
-  </button>
+  <div class="login-form">
+    <h2 *ngIf="!isRegistering">Login</h2>
+    <h2 *ngIf="isRegistering">Register</h2>
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <div *ngIf="isRegistering" class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName" required>
+      </div>
+      <div *ngIf="isRegistering" class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" [(ngModel)]="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" [(ngModel)]="password" name="password" required>
+      </div>
+      <button type="submit" [disabled]="!loginForm.form.valid">{{ isRegistering ? 'Register' : 'Login' }}</button>
+    </form>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <button (click)="toggleMode()" class="toggle-button">
+      {{ isRegistering ? 'Already have an account? Login' : 'Don\'t have an account? Register' }}
+    </button>
+  </div>
 </div>
 
 
