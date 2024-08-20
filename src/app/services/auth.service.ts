@@ -13,8 +13,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  register(user: User): Observable<{ kundenId: string, firstName: string, lastName: string, warenkorbId: string }> {
-    return this.http.post<{ kundenId: string, firstName: string, lastName: string, warenkorbId:string }>(`${this.apiUrl}/register`, user, {
+  register(user: User): Observable<{ kundenId: string, firstName: string, lastName: string,email:string, warenkorbId: string }> {
+    return this.http.post<{ kundenId: string, firstName: string, lastName: string,email:string, warenkorbId:string }>(`${this.apiUrl}/register`, user, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Accept': 'application/json'

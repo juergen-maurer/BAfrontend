@@ -2,14 +2,14 @@
 <div class="login-container">
   <div class="login-form">
     <h2 *ngIf="!isRegistering">Login</h2>
-    <h2 *ngIf="isRegistering">Register</h2>
+    <h2 *ngIf="isRegistering">Registrieren</h2>
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <div *ngIf="isRegistering" class="form-group">
-        <label for="firstName">First Name:</label>
+        <label for="firstName">Vorname:</label>
         <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName" required>
       </div>
       <div *ngIf="isRegistering" class="form-group">
-        <label for="lastName">Last Name:</label>
+        <label for="lastName">Nachname:</label>
         <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName" required>
       </div>
       <div class="form-group">
@@ -17,14 +17,14 @@
         <input type="email" id="email" [(ngModel)]="email" name="email" required>
       </div>
       <div class="form-group">
-        <label for="password">Password:</label>
+        <label for="password">Passwort:</label>
         <input type="password" id="password" [(ngModel)]="password" name="password" required>
       </div>
-      <button type="submit" [disabled]="!loginForm.form.valid">{{ isRegistering ? 'Register' : 'Login' }}</button>
+      <button type="submit" [disabled]="!loginForm.form.valid">{{ isRegistering ? 'Jetzt registrieren' : 'Login' }}</button>
     </form>
     <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
     <button (click)="toggleMode()" class="toggle-button">
-      {{ isRegistering ? 'Already have an account? Login' : 'Don\'t have an account? Register' }}
+      {{ isRegistering ? 'Sie haben schon einen Account? Login' : 'Sie haben noch keinen Account? Registrieren' }}
     </button>
   </div>
 </div>

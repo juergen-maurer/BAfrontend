@@ -12,6 +12,8 @@ import { NotificationComponent } from './notification/notification.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
 import {LoginComponent} from "./login/login.component";
+import {ProductDetailsComponent} from "./product-details/product-details.component";
+
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import {LoginComponent} from "./login/login.component";
     EnumFormatterPipe,
     NotificationComponent,
     UserProfileComponent,
-    LoginComponent
+    LoginComponent,
+    ProductDetailsComponent
   ],
     imports: [
         BrowserModule,

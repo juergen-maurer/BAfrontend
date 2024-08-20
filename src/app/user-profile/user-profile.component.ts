@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import {User} from "../User";
+import {AppComponent} from "../app.component";
 
 
 @Component({
@@ -24,7 +25,7 @@ export class UserProfileComponent implements OnInit {
   newPassword: string = '';
   confirmNewPassword: string = '';
   confirmOldPassword: string = '';
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private appComponent: AppComponent) { }
 
   ngOnInit(): void {
     this.kundenIdStr = localStorage.getItem('kundenId');
@@ -41,6 +42,10 @@ export class UserProfileComponent implements OnInit {
       next: () => {
         this.message = 'Profile updated successfully!';
         this.isEditing = false;
+        localStorage.setItem('firstName', <string>this.user.firstName);
+        localStorage.setItem('lastName', <string>this.user.lastName);
+        localStorage.setItem('email', this.user.email);
+        this.appComponent.updateUserDetails();
       },
       error: (err) => {
         console.error('Error updating profile', err);

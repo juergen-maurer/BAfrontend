@@ -5,20 +5,38 @@
     Ihr Warenkorb ist leer.
   </div>
   <div class="cart-item-list">
-    <div class="cart-item" *ngFor="let product of cart">
+    <div class="cart-item" *ngFor="let product of cart" (click)="viewProductDetail(product.id)">
       <img src="{{product.imageUrl}}" alt="{{product.name}}">
       <div class="cart-item-title">{{product.name}}</div>
       <div class="cart-item-price">{{product.price | currency:'EUR'}}</div>
-      <input type="number" [(ngModel)]="product.quantity" (focus)="saveOriginalQuantity(product)" (blur)="updateQuantityIfChanged(product)" min="1">
-      <button (click)="removeFromCart(product)">X</button>
+      <input type="number" (click)="$event.stopPropagation()" [(ngModel)]="product.quantity" (change)="updateQuantityIfChanged(product)" min="1">
+      <button (click)="removeFromCart(product); $event.stopPropagation()">X</button>
     </div>
   </div>
   <div style="text-align: left;">
     <div class="cart-actions" style="display: flex; justify-content: space-between; align-items: center;">
-      <button class="clear-cart" (click)="clearCart()" [disabled]="cart.length === 0">Warenkorb leeren</button>
+      <button class="clear-cart" (click)="showClearCartModal()" [disabled]="cart.length === 0">Warenkorb leeren</button>
       <div *ngIf="cart.length > 0" class="total-value" style="font-size: 0.9rem;">
         Gesamtwert: {{ getTotalCartValue() | currency:'EUR' }}
       </div>
     </div>
   </div>
+
+
+  <!-- Modal for clearing cart-->
+
+  <div class="modal" *ngIf="isClearCartModalVisible">
+    <div class="modal-content">
+      <span class="close" (click)="hideClearCartModal()">&times;</span>
+
+      <h3>Warenkorb leeren</h3>
+      <p>Sind Sie sicher, dass Sie den Warenkorb leeren möchten?</p>
+      <div class="modal-buttons">
+        <button class="confirm" (click)="clearCart()">Ja</button>
+        <button class="cancel" (click)="hideClearCartModal()">Nein</button>
+      </div>
+    </div>
+  </div>
+
+
 </div>

@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     // Initialisierungslogik hier
     this.checkLoginStatus();
+    this.updateUserDetails();
   }
   checkLoginStatus(): void {
     this.isLoggedIn = !!localStorage.getItem('firstName');
@@ -32,7 +33,6 @@ export class AppComponent implements OnInit {
     this.firstName = localStorage.getItem('firstName');
     this.lastName = localStorage.getItem('lastName');
     this.warenkorbId = localStorage.getItem('warenkorbId') ? parseInt(localStorage.getItem('warenkorbId') || '0', 10) : null;
-
   }
   onSearchTermChange(event: KeyboardEvent): void {
     if (event.key === 'Enter') {

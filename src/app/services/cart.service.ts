@@ -16,7 +16,9 @@ export class CartService {
   constructor(private http: HttpClient) {
   }
 
-  addToCart(productId: number, quantity: number = 1, warenkorbId:number |null): Observable<any> {
+
+  addToCart(productId: number, quantity: number, warenkorbId:number | null): Observable<any> {
+
     // Fügen Sie productId als Query-Parameter hinzu
     const params = new HttpParams()
       .set('productId', productId.toString()).set('quantity', quantity.toString())

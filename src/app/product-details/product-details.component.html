@@ -1,0 +1,38 @@
+<!-- src/app/product-details/product-details.component.html -->
+<app-notification [message]="notificationMessage"></app-notification>
+<div class="product-details">
+  <div class="product-image">
+    <img [src]="product?.imageUrl" alt="{{product?.name}}">
+  </div>
+  <div class="product-info">
+    <div class="product-title">{{product?.name}}</div>
+    <div class="product-description">{{product?.description}}</div>
+  </div>
+  <div class="product-price-add-to-cart">
+    <div class="product-price">{{product?.price | currency:'EUR'}}</div>
+    <div class="add-to-cart">
+      <select [(ngModel)]="selectedQuantity">
+        <ng-container *ngFor="let qty of quantities">
+          <option *ngIf="qty !== 'More'" [value]="qty">{{ qty }}</option>
+          <option *ngIf="qty === 'More'" [value]="qty">Mehr</option>
+        </ng-container>
+      </select>
+      <input *ngIf="selectedQuantity === 'More'"  type="number" [(ngModel)]="customQuantity" min="1" placeholder="Anzahl">
+      <button (click)="addToCart()">In den Warenkorb</button>
+    </div>
+    <div *ngIf="productQuantityInCart > 0" class="cart-info">
+      Dieses Produkt ist bereits {{productQuantityInCart}} mal im Warenkorb.
+    </div>
+  </div>
+</div>
+
+<div class="similar-products" *ngIf="similarProducts?.length">
+  <h3>Vielleicht interessiert Sie</h3>
+  <div class="similar-products-product-list">
+    <div class="similar-products-product-card" *ngFor="let similarProduct of similarProducts" (click)="viewProductDetail(similarProduct.id)">
+      <img [src]="similarProduct.imageUrl" alt="{{ similarProduct.name }}" class="similar-products-product-image">
+      <div class="similar-products-product-name">{{ similarProduct.name }}</div>
+      <div class="similar-products-product-price">{{ similarProduct.price | currency }}</div>
+    </div>
+  </div>
+</div>

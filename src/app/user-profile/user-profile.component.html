@@ -1,6 +1,6 @@
 <!-- src/app/user-profile/user-profile.component.html -->
 <div class="user-profile-container">
-  <h2>User Profile</h2>
+  <h2>Kundenprofil</h2>
 
   <!-- Kundendaten Section -->
   <section class="kundendaten-section">
@@ -12,11 +12,11 @@
     <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
       <ul class="profile-list">
         <li class="form-group">
-          <label for="firstName">First Name:</label>
+          <label for="firstName">Vorname:</label>
           <input type="text" id="firstName" [(ngModel)]="user.firstName" name="firstName" [disabled]="!isEditing" required>
         </li>
         <li class="form-group">
-          <label for="lastName">Last Name:</label>
+          <label for="lastName">Nachname:</label>
           <input type="text" id="lastName" [(ngModel)]="user.lastName" name="lastName" [disabled]="!isEditing" required>
         </li>
         <li class="form-group">
@@ -25,7 +25,7 @@
         </li>
       </ul>
       <p *ngIf="message">{{ message }}</p>
-      <button *ngIf="isEditing" type="button" [disabled]="!profileForm.form.valid" (click)="showPasswordModal()">Save</button>
+      <button *ngIf="isEditing" type="button" [disabled]="!profileForm.form.valid" (click)="showPasswordModal()">Speichern</button>
     </form>
   </section>
 
@@ -34,29 +34,29 @@
     <h3>Sicherheit</h3>
     <div class="form-group">
       <label>Passwort:</label>
-      <button class="toggle-button" (click)="toggleChangePasswordModal()">Change Password</button>
+      <button class="toggle-button" (click)="toggleChangePasswordModal()">Passwort ändern</button>
     </div>
 
     <!-- Change Password Modal -->
     <div class="modal" *ngIf="showChangePasswordModal">
       <div class="modal-content">
         <span class="close" (click)="toggleChangePasswordModal()">&times;</span>
-        <h3>Change Password</h3>
+        <h3>Passwort ändern </h3>
         <form (ngSubmit)="onChangePassword()" #passwordForm="ngForm">
           <div class="modal-group-form-group">
-            <label for="oldPassword">Old Password:</label>
+            <label for="oldPassword">Altes Passwort:</label>
             <input type="password" id="oldPassword" [(ngModel)]="oldPassword" name="oldPassword" required>
           </div>
           <div class="modal-group-form-group">
-            <label for="newPassword">New Password:</label>
+            <label for="newPassword">Neues Passwort:</label>
             <input type="password" id="newPassword" [(ngModel)]="newPassword" name="newPassword" required>
           </div>
           <div class="modal-group-form-group">
-            <label for="confirmNewPassword">Confirm New Password:</label>
+            <label for="confirmNewPassword">Neues Passwort bestätigen:</label>
             <input type="password" id="confirmNewPassword" [(ngModel)]="confirmNewPassword" name="confirmPassword" required>
           </div>
           <p *ngIf="message">{{ message }}</p>
-          <button class="change-password-button" type="submit" [disabled]="!passwordForm.form.valid || newPassword !== confirmNewPassword">Change Password</button>
+          <button class="change-password-button" type="submit" [disabled]="!passwordForm.form.valid || newPassword !== confirmNewPassword">Änderung abschließen</button>
         </form>
       </div>
     </div>
@@ -66,13 +66,13 @@
   <div class="modal" *ngIf="showPasswordConfirmationModal">
     <div class="modal-content">
       <span class="close" (click)="togglePasswordConfirmationModal()">&times;</span>
-      <h3>Confirm Password</h3>
+      <h3>Zum Speichern Ihrer Daten, verifizieren Sie bitte Ihr Passwort</h3>
       <form (ngSubmit)="onConfirmPassword()" #confirmPasswordForm="ngForm">
         <div class="modal-group-form-group">
-          <label for="confirmOldPassword">Current Password:</label>
+          <label for="confirmOldPassword">Passwort:</label>
           <input type="password" id="confirmOldPassword" [(ngModel)]="password" name="confirmPassword" required>
         </div>
-        <button class="confirm-password-button" type="submit" [disabled]="!confirmPasswordForm.form.valid">Confirm</button>
+        <button class="confirm-password-button" type="submit" [disabled]="!confirmPasswordForm.form.valid">Bestätigen</button>
       </form>
     </div>
   </div>

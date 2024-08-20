@@ -97,5 +97,9 @@ export class ProductListComponent implements OnInit {
   }
   }
 
+  viewProductDetail(productId: number): void {
+    this.router.navigate(['/product', productId]);
+  }
+
 }
 

@@ -37,6 +37,7 @@ export class LoginComponent {
           localStorage.setItem('kundenId', response.kundenId);
           localStorage.setItem('firstName', response.firstName);
           localStorage.setItem('lastName', response.lastName);
+          localStorage.setItem('email', response.email);
           localStorage.setItem('warenkorbId', response.warenkorbId);
           this.appComponent.updateUserDetails();
           this.router.navigate(['/']);
@@ -55,7 +56,6 @@ export class LoginComponent {
       this.authService.login(credentials).subscribe(
         response => {
           localStorage.setItem('kundenId', response.kundenId);
-          console.log('kundenId:', response.kundenId, localStorage.getItem('kundenId'));
           localStorage.setItem('firstName', response.firstName);
           localStorage.setItem('lastName', response.lastName);
           localStorage.setItem('email', response.email);

@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
 import {CartService} from "../services/cart.service";
 import {SearchService} from "../services/search.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-cart',
@@ -16,9 +17,12 @@ export class CartComponent implements OnInit {
   productId: number = 0;
   searchTerm: string = '';
   warenkorbIdStr: string | null = null;
-  warenkorbId: number | null = null
+  warenkorbId: number | null = null;
+  isClearCartModalVisible: boolean = false;
 
-  constructor(private cartService: CartService, private searchService: SearchService) {
+
+
+  constructor(private cartService: CartService, private searchService: SearchService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -56,10 +60,18 @@ export class CartComponent implements OnInit {
   }
 
 
+  showClearCartModal(): void {
+    this.isClearCartModalVisible = true;
+  }
+
+  hideClearCartModal(): void {
+    this.isClearCartModalVisible = false;
+  }
   clearCart(): void {
     this.cartService.clearCart(this.warenkorbId);
     this.cart = [];
     this.notificationMessage = 'Der Warenkorb wurde geleert!';
+    this.hideClearCartModal()
     setTimeout(() => this.notificationMessage = '', 3000); // Hide message after 3 seconds
   }
 
@@ -107,5 +119,9 @@ export class CartComponent implements OnInit {
 
   getTotalCartValue() {
     return this.cart.reduce((acc, product) => acc + (product.price * product.quantity), 0);
+  }
+
+  viewProductDetail(productId: number): void {
+    this.router.navigate(['/product', productId]);
   }
 }
