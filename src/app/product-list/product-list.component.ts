@@ -22,6 +22,8 @@ export class ProductListComponent implements OnInit {
   selectedPriceRange: string = "";
   notificationMessage: string = "";
   searchTerm: string = '';
+  warenkorbIdStr: string |null =null;
+  warenkorbId: number | null = null;
 
   constructor(
     private productService: ProductService,
@@ -74,19 +76,17 @@ export class ProductListComponent implements OnInit {
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
-    const warenkorbIdStr = localStorage.getItem('warenkorbId');
-    const warenkorbId = warenkorbIdStr !== null ? parseInt(warenkorbIdStr, 10) : null;
+    this.warenkorbIdStr = localStorage.getItem('warenkorbId');
+    this.warenkorbId = this.warenkorbIdStr !== null ? parseInt(this.warenkorbIdStr, 10) : null;
 
-    if (warenkorbId === null || isNaN(warenkorbId)) {
-      console.error('Invalid warenkorbId:', warenkorbIdStr);
+    if (this.warenkorbId === null || isNaN(this.warenkorbId)) {
+      console.error('Invalid warenkorbId:', this.warenkorbIdStr);
     } else {
-      console.log('Converted Long:', warenkorbId);
     }
-    this.cartService.addToCart(product.id, 1, warenkorbId).subscribe({
+    this.cartService.addToCart(product.id, 1, this.warenkorbId).subscribe({
       next: (response) => {
         this.notificationMessage = `${product.name} wurde erfolgreich in den Warenkorb gelegt!`;
         setTimeout(() => this.notificationMessage = '', 3000); // Hide message after 3 seconds
-        console.log('Produkt erfolgreich hinzugefügt', response);
         // Hier können Sie weitere Aktionen durchführen, z.B. eine Benachrichtigung anzeigen
       },
       error: (error) => {

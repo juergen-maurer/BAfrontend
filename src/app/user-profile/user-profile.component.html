@@ -38,8 +38,8 @@
     </div>
 
     <!-- Change Password Modal -->
-    <div class="modal" *ngIf="showChangePasswordModal">
-      <div class="modal-content">
+    <div class="modal" *ngIf="showChangePasswordModal" (click)="toggleChangePasswordModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
         <span class="close" (click)="toggleChangePasswordModal()">&times;</span>
         <h3>Passwort ändern </h3>
         <form (ngSubmit)="onChangePassword()" #passwordForm="ngForm">
@@ -63,8 +63,8 @@
   </section>
 
   <!-- Password Confirmation Modal -->
-  <div class="modal" *ngIf="showPasswordConfirmationModal">
-    <div class="modal-content">
+  <div class="modal" *ngIf="showPasswordConfirmationModal" (click)="togglePasswordConfirmationModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
       <span class="close" (click)="togglePasswordConfirmationModal()">&times;</span>
       <h3>Zum Speichern Ihrer Daten, verifizieren Sie bitte Ihr Passwort</h3>
       <form (ngSubmit)="onConfirmPassword()" #confirmPasswordForm="ngForm">

@@ -30,7 +30,6 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     this.kundenIdStr = localStorage.getItem('kundenId');
     this.kundenId = this.kundenIdStr !== null ? parseInt(this.kundenIdStr, 10) : null;
-    console.log('kundenId:', this.kundenId);
     this.authService.getProfile(this.kundenId).subscribe({
       next: (data) => this.user = data,
       error: (err) => console.error('Error fetching profile', err)
@@ -82,6 +81,8 @@ export class UserProfileComponent implements OnInit {
   showPasswordModal() {
     this.togglePasswordConfirmationModal();
   }
+  // Update your component TypeScript file to include the closeModal method
+
   onChangePassword(): void {
     if (this.newPassword !== this.confirmNewPassword) {
       this.message = 'New passwords do not match';

@@ -1,0 +1,74 @@
+<!-- src/app/checkout/checkout.component.html -->
+<div class="checkout-container">
+  <h2>Checkout</h2>
+  <div class="checkout-content">
+    <div class="checkout-form-container">
+      <form (ngSubmit)="submitOrder()" class="checkout-form">
+
+        <section class="lieferadresse-section">
+          <h3>Lieferadresse</h3>
+          <div class="form-group">
+            <label for="country">Land:</label>
+            <select id="country" [(ngModel)]="orderDetails.address.country" name="country" required>
+              <option value="Germany">Germany</option>
+              <option value="Austria">Austria</option>
+              <option value="Switzerland">Switzerland</option>
+              <!-- Add more countries as needed -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="firstName">Vorname:</label>
+            <input type="text" id="firstName" [(ngModel)]="orderDetails.address.firstName" name="firstName" required>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Nachname:</label>
+            <input type="text" id="lastName" [(ngModel)]="orderDetails.address.lastName" name="lastName" required>
+          </div>
+          <div class="form-group">
+            <label for="postalCode">PLZ:</label>
+            <input type="text" id="postalCode" [(ngModel)]="orderDetails.address.postalCode" name="postalCode" required>
+          </div>
+          <div class="form-group">
+            <label for="street">Straße:</label>
+            <input type="text" id="street" [(ngModel)]="orderDetails.address.street" name="street" required>
+          </div>
+          <div class="form-group">
+            <label for="city">Stadt:</label>
+            <input type="text" id="city" [(ngModel)]="orderDetails.address.city" name="city" required>
+          </div>
+          <div class="form-group">
+            <label for="houseNumber">Hausnummer:</label>
+            <input type="text" id="houseNumber" [(ngModel)]="orderDetails.address.houseNumber" name="houseNumber" required>
+          </div>
+        </section>
+        <section class="zahlungsmethode-section">
+          <h3>Zahlungsmethode</h3>
+          <div class="form-group">
+            <label for="paymentMethod">Zahlungsmethode:</label>
+            <select id="paymentMethod" [(ngModel)]="orderDetails.paymentMethod" name="paymentMethod" required>
+              <option value="Credit Card">Kreditkarte</option>
+              <option value="PayPal">PayPal</option>
+              <option value="Bank Transfer">Banküberweisung</option>
+            </select>
+          </div>
+        </section>
+        <button type="submit" class="submit-button">Bestellung abschließen</button>
+      </form>
+    </div>
+    <!-- src/app/checkout/checkout.component.html -->
+    <div class="cart-summary">
+      <h3>Warenkorb</h3>
+      <ul>
+        <li *ngFor="let item of orderDetails.items">
+          <div class="item-row">
+            <span class="item-quantity">{{ item.quantity }}x</span>
+            <span class="item-details">{{ item.name }}</span>
+            <span class="item-price" [style.color]="item.quantity > 1 ? 'grey' : 'black'">{{ item.price | customCurrency }}</span>
+          </div>
+          <div *ngIf="item.quantity > 1" class="item-subtotal"> {{ (item.quantity * item.price) | customCurrency }}</div>
+        </li>
+      </ul>
+      <p>Gesamtpreis: {{ orderDetails.total | customCurrency }}</p>
+    </div>
+  </div>
+</div>

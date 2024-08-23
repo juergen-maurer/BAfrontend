@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 
 import {LoginComponent} from "./login/login.component";
 import {ProductDetailsComponent} from "./product-details/product-details.component";
+import { CheckoutComponent } from './checkout/checkout.component';
+import {CustomCurrencyPipe} from "./CustomCurrencyPipe";
 
 
 @NgModule({
@@ -24,14 +26,18 @@ import {ProductDetailsComponent} from "./product-details/product-details.compone
     NotificationComponent,
     UserProfileComponent,
     LoginComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    CheckoutComponent,
+    CustomCurrencyPipe
   ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         FormsModule,
     ],
-  providers: [provideHttpClient()],
+  providers: [
+    provideHttpClient(),
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

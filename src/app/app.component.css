@@ -1,35 +1,50 @@
 :host{
   display: flex;
   flex-direction: column;
-  height: 100vh;
-}
-
-main {
-  flex: 1 0 auto; /* Nimmt den verbleibenden Platz ein */
-
+  min-height: 100vh;
 }
 
 nav {
   background-color: #007bff;
   color: white;
   padding: 10px;
-  flex: 0 0 auto; /* Fixiert die Höhe der Navigationsleiste */
-}
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  z-index: 1000; /* Ensure the navbar is above other content */
 }
 
+main {
+  flex: 1; /* Take up the remaining space */
+  margin-top: 60px; /* Adjust based on the height of the navbar */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.content-wrapper{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+
+.app-footer {
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  flex-shrink: 0;  /*Ensure the footer does not shrink*/
+  margin-top: auto;  /*Push the footer to the bottom*/
+}
 
 .app-navbar {
   display: flex;
   justify-content: space-between;
-
   padding: 10px 20px;
   background-color: #f8f9fa;
   border-bottom: 1px solid #e0e0e0;
-
 }
 
 .nav-link {
@@ -58,36 +73,6 @@ nav a {
 
 .app-content {
   flex: 1;
-}
-
-.app-footer {
-  background-color: #343a40;
-  color: white;
-  text-align: center;
-  padding: 10px 0;
-  bottom: 0;
-  width: 100%;
-  flex: 0 0 auto; /* Fixiert die Höhe des Footers */
-}
-
-.search-input, select {
-
-}
-
-.search-input {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-select {
-  border: 1px solid #ccc;
-  background-color: white;
-  border-radius: 5px;
-}
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
 }
 
 

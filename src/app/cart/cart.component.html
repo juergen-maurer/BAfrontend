@@ -8,25 +8,28 @@
     <div class="cart-item" *ngFor="let product of cart" (click)="viewProductDetail(product.id)">
       <img src="{{product.imageUrl}}" alt="{{product.name}}">
       <div class="cart-item-title">{{product.name}}</div>
-      <div class="cart-item-price">{{product.price | currency:'EUR'}}</div>
+      <div class="cart-item-price">{{product.price | customCurrency}}</div>
       <input type="number" (click)="$event.stopPropagation()" [(ngModel)]="product.quantity" (change)="updateQuantityIfChanged(product)" min="1">
       <button (click)="removeFromCart(product); $event.stopPropagation()">X</button>
     </div>
   </div>
   <div style="text-align: left;">
-    <div class="cart-actions" style="display: flex; justify-content: space-between; align-items: center;">
-      <button class="clear-cart" (click)="showClearCartModal()" [disabled]="cart.length === 0">Warenkorb leeren</button>
-      <div *ngIf="cart.length > 0" class="total-value" style="font-size: 0.9rem;">
-        Gesamtwert: {{ getTotalCartValue() | currency:'EUR' }}
+    <div class="cart-actions">
+      <div class="cart-actions-left">
+        <button class="clear-cart" (click)="showClearCartModal()" [disabled]="cart.length === 0">Warenkorb leeren</button>
       </div>
-    </div>
+      <div class="cart-actions-right">
+        <div *ngIf="cart.length > 0" class="total-value">
+          Gesamtwert: {{ getTotalCartValue() | customCurrency }}
+        </div>
+        <button class="submit-order" (click)="navigateToCheckout()" [disabled]="cart.length === 0">Kauf abschließen</button>
+      </div>
   </div>
-
-
+  </div>
   <!-- Modal for clearing cart-->
 
-  <div class="modal" *ngIf="isClearCartModalVisible">
-    <div class="modal-content">
+  <div class="modal" *ngIf="isClearCartModalVisible" (click)="hideClearCartModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
       <span class="close" (click)="hideClearCartModal()">&times;</span>
 
       <h3>Warenkorb leeren</h3>

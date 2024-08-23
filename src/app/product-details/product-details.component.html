@@ -9,7 +9,7 @@
     <div class="product-description">{{product?.description}}</div>
   </div>
   <div class="product-price-add-to-cart">
-    <div class="product-price">{{product?.price | currency:'EUR'}}</div>
+    <div class="product-price">{{product?.price | customCurrency }}</div>
     <div class="add-to-cart">
       <select [(ngModel)]="selectedQuantity">
         <ng-container *ngFor="let qty of quantities">
@@ -32,7 +32,7 @@
     <div class="similar-products-product-card" *ngFor="let similarProduct of similarProducts" (click)="viewProductDetail(similarProduct.id)">
       <img [src]="similarProduct.imageUrl" alt="{{ similarProduct.name }}" class="similar-products-product-image">
       <div class="similar-products-product-name">{{ similarProduct.name }}</div>
-      <div class="similar-products-product-price">{{ similarProduct.price | currency }}</div>
+      <div class="similar-products-product-price">{{ similarProduct.price | customCurrency }}</div>
     </div>
   </div>
 </div>

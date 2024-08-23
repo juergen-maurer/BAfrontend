@@ -42,7 +42,7 @@ export class CartComponent implements OnInit {
     if (this.warenkorbId === null || isNaN(this.warenkorbId)) {
       console.error('Invalid warenkorbId:', this.warenkorbIdStr);
     } else {
-      console.log('Converted Long:', this.warenkorbId);
+
     }
 
     this.cartService.getCartDetails(this.warenkorbId).subscribe({
@@ -51,7 +51,6 @@ export class CartComponent implements OnInit {
           ...item.product,
           quantity: item.quantity
         }));
-        console.log('Warenkorbdetails geladen:', this.cart);
       },
       error: (error) => {
         console.error('Fehler beim Laden der Warenkorbdetails:', error);
@@ -103,10 +102,6 @@ export class CartComponent implements OnInit {
     this.cartService.updateQuantity(productId, quantity, this.warenkorbId);
   }
 
-  saveOriginalQuantity(product: Product): void {
-    // Speichern der aktuellen Menge als ursprüngliche Menge
-    product.originalQuantity = product.quantity;
-  }
 
   updateQuantityIfChanged(product: Product): void {
     if (product.quantity !== product.originalQuantity) {
@@ -123,5 +118,10 @@ export class CartComponent implements OnInit {
 
   viewProductDetail(productId: number): void {
     this.router.navigate(['/product', productId]);
+  }
+
+
+  navigateToCheckout(): void {
+    this.router.navigate(['/checkout'], { queryParams: { warenkorbId: this.warenkorbId } });
   }
 }

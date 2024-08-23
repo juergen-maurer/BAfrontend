@@ -52,7 +52,6 @@ export class LoginComponent {
       );
     } else {
       const credentials = { email: this.email, password: this.password };
-      console.log(credentials);
       this.authService.login(credentials).subscribe(
         response => {
           localStorage.setItem('kundenId', response.kundenId);

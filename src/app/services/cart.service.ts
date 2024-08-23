@@ -39,7 +39,6 @@ export class CartService {
       next: () => {
         // Erfolgreiches Löschen des Warenkorbs im Backend
         this.cart = []; // Lokalen Warenkorb leeren
-        console.log('Warenkorb erfolgreich gelöscht');
       },
       error: (error) => {
         // Fehlerbehandlung
@@ -57,7 +56,6 @@ export class CartService {
     const params = new HttpParams().set('cartId', warenkorbId || 0);
     // Optional: Senden einer Anfrage an das Backend, um das Produkt aus dem Warenkorb zu entfernen
     this.http.delete(`${this.baseUrl}/remove/${productId}`, {params}).subscribe({
-      next: () => console.log(`Produkt ${productId} wurde erfolgreich entfernt.`),
       error: (error) => console.error('Fehler beim Entfernen des Produkts:', error)
     });
   }

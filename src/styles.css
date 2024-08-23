@@ -16,11 +16,6 @@ body {
   flex: 1; /* Allow the main content to grow and fill the available space */
 }
 
-.app-footer {
-  background-color: #343a40;
-  color: white;
-  text-align: center;
-  padding: 10px 0;
-  width: 100%;
-  box-sizing: border-box; /* Ensure padding is included in the element's total width */
-}
+/* src/styles.css */
+
+

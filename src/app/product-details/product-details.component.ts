@@ -10,7 +10,7 @@ import {CartService} from "../services/cart.service";
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit {
-  product: Product | undefined;
+  product: Product |null =null;
   similarProducts: Product[] = [];
   quantities: (number | string)[] = [...Array.from({ length: 10 }, (_, i) => i + 1), 'More'];
   selectedQuantity: number | string = 1;
@@ -26,7 +26,8 @@ export class ProductDetailsComponent implements OnInit {
     private productService: ProductService,
     private router: Router,
     private cartService: CartService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.warenkorbIdStr = localStorage.getItem('warenkorbId');
