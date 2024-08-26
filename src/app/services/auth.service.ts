@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {User} from "../User";
 import {HttpHeaders} from "@angular/common/http";
+import {Profile} from "../Profile";
 
 @Injectable({
   providedIn: 'root'
@@ -30,9 +31,9 @@ export class AuthService {
       })
     });
   }
-  getProfile(id: number | null): Observable<User> {
+  getProfile(id: number | null): Observable<Profile> {
     const params = new HttpParams().set('id',  id || 0);
-    return this.http.get<User>(this.apiUrl +'/profile', {params});
+    return this.http.get<Profile>(this.apiUrl +'/profile', {params});
   }
 
   updateProfile(user: User, password: String): Observable<User> {

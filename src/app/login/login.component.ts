@@ -36,8 +36,8 @@ export class LoginComponent {
         response => {
           localStorage.setItem('kundenId', response.kundenId);
           localStorage.setItem('firstName', response.firstName);
-          localStorage.setItem('lastName', response.lastName);
-          localStorage.setItem('email', response.email);
+          //localStorage.setItem('lastName', response.lastName);
+          //localStorage.setItem('email', response.email);
           localStorage.setItem('warenkorbId', response.warenkorbId);
           this.appComponent.updateUserDetails();
           this.router.navigate(['/']);
@@ -56,8 +56,8 @@ export class LoginComponent {
         response => {
           localStorage.setItem('kundenId', response.kundenId);
           localStorage.setItem('firstName', response.firstName);
-          localStorage.setItem('lastName', response.lastName);
-          localStorage.setItem('email', response.email);
+          //localStorage.setItem('lastName', response.lastName);
+          //localStorage.setItem('email', response.email);
           localStorage.setItem('warenkorbId', response.warenkorbId);
           this.appComponent.updateUserDetails();
           this.router.navigate(['/']);

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import {User} from "../User";
 import {AppComponent} from "../app.component";
+import {Address, Profile} from "../Profile";
 
 
 @Component({
@@ -11,7 +12,15 @@ import {AppComponent} from "../app.component";
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
-  user: User = { email: '', firstName: '', lastName: '' };
+  profile:Profile = {
+    firstName: '', lastName: '', email: '', warenkorbId: '',
+    lastUsedAddress: { street: '', city: '', postalCode: '', country: '', houseNumber: '', addressfirstName: '', addresslastName: '' },
+    bestellungen: []
+  }
+
+  user: User = {email: '', firstName: '', lastName: '' };
+  expandedOrders: Set<number> = new Set<number>();
+
   password: string = '';
   message: string = '';
   kundenIdStr: string | null = null;
@@ -31,19 +40,39 @@ export class UserProfileComponent implements OnInit {
     this.kundenIdStr = localStorage.getItem('kundenId');
     this.kundenId = this.kundenIdStr !== null ? parseInt(this.kundenIdStr, 10) : null;
     this.authService.getProfile(this.kundenId).subscribe({
-      next: (data) => this.user = data,
+      next: (data) => {
+        console.log('Profile data:', data); // Log the data element
+        this.profile = data;
+        this.user.id=data.id;
+      },
       error: (err) => console.error('Error fetching profile', err)
     });
   }
 
+  toggleBestellung(orderId: number): void {
+    if (this.expandedOrders.has(orderId)) {
+      this.expandedOrders.delete(orderId);
+    } else {
+      this.expandedOrders.add(orderId);
+    }
+  }
+
+  isOrderExpanded(orderId: number): boolean {
+    return this.expandedOrders.has(orderId);
+  }
+
   onSubmit(): void {
+    this.user.firstName= this.profile.firstName;
+    this.user.lastName= this.profile.lastName;
+    this.user.email= this.profile.email;
     this.authService.updateProfile(this.user, this.password).subscribe({
       next: () => {
+        console.log(this.user);
         this.message = 'Profile updated successfully!';
         this.isEditing = false;
         localStorage.setItem('firstName', <string>this.user.firstName);
-        localStorage.setItem('lastName', <string>this.user.lastName);
-        localStorage.setItem('email', this.user.email);
+        //localStorage.setItem('lastName', <string>this.profile.lastName);
+        //localStorage.setItem('email', this.profile.email);
         this.appComponent.updateUserDetails();
       },
       error: (err) => {

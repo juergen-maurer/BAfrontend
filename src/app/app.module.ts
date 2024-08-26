@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { CartComponent } from './cart/cart.component';
 import {provideHttpClient} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {EnumFormatterPipe} from "./EnumFormatterPipe";
 import { NotificationComponent } from './notification/notification.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
@@ -34,6 +34,7 @@ import {CustomCurrencyPipe} from "./CustomCurrencyPipe";
         BrowserModule,
         AppRoutingModule,
         FormsModule,
+        ReactiveFormsModule
     ],
   providers: [
     provideHttpClient(),

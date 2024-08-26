@@ -123,6 +123,13 @@
 .submit-button:hover {
   background-color: #218838;
 }
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.submit-button:disabled:hover {
+  background-color:#ccc;
+}
 
 /* src/app/checkout/checkout.component.css */
 .cart-summary {

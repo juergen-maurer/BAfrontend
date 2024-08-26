@@ -13,15 +13,15 @@
       <ul class="profile-list">
         <li class="form-group">
           <label for="firstName">Vorname:</label>
-          <input type="text" id="firstName" [(ngModel)]="user.firstName" name="firstName" [disabled]="!isEditing" required>
+          <input type="text" id="firstName" [(ngModel)]="profile.firstName" name="firstName" [disabled]="!isEditing" required>
         </li>
         <li class="form-group">
           <label for="lastName">Nachname:</label>
-          <input type="text" id="lastName" [(ngModel)]="user.lastName" name="lastName" [disabled]="!isEditing" required>
+          <input type="text" id="lastName" [(ngModel)]="profile.lastName" name="lastName" [disabled]="!isEditing" required>
         </li>
         <li class="form-group">
           <label for="email">Email:</label>
-          <input type="email" id="email" [(ngModel)]="user.email" name="email" [disabled]="!isEditing" required>
+          <input type="email" id="email" [(ngModel)]="profile.email" name="email" [disabled]="!isEditing" required>
         </li>
       </ul>
       <p *ngIf="message">{{ message }}</p>
@@ -60,6 +60,28 @@
         </form>
       </div>
     </div>
+  </section>
+  <section class="bestellungen-section">
+    <h3>Bestellungshistorie</h3>
+    <ul>
+      <li *ngFor="let bestellung of profile.bestellungen" class="bestellung-box">
+        <div class="bestellung-summary" (click)="toggleBestellung(bestellung.id)" [ngClass]="{'expanded': isOrderExpanded(bestellung.id)}">
+          <p>Datum: {{ bestellung.orderDateTime | date:'dd.MM.yyyy, HH:mm' }}</p>
+          <p>Gesamtbetrag: {{ bestellung.total | currency }}</p>
+          <i class="fa" [ngClass]="{'fa-chevron-down': !isOrderExpanded(bestellung.id), 'fa-chevron-up': isOrderExpanded(bestellung.id)}"></i>
+        </div>
+        <div class="bestellung-details" *ngIf="isOrderExpanded(bestellung.id)">
+          <ul>
+            <li *ngFor="let item of bestellung.bestellungsCart.bestellungsCartItems" class="product-item">
+              <img [src]="item.product.imageUrl" alt="{{ item.product.name }}" class="product-image">
+              <span>{{ item.product.name }}</span>
+              <span>Menge: {{item.quantity}}</span>
+              <span>je {{ item.price | customCurrency }}</span>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
   </section>
 
   <!-- Password Confirmation Modal -->
