@@ -1,8 +1,8 @@
 <!-- src/app/product-details/product-details.component.html -->
 <app-notification [message]="notificationMessage"></app-notification>
 <div class="product-details">
-  <div class="product-image">
-    <img [src]="product?.imageUrl" alt="{{product?.name}}">
+  <div class="product-image" (click)="openModal('img/'+ product?.imageUrl)">
+    <img class="product-image" src="img/{{product?.imageUrl}}" alt="{{product?.name}}">
   </div>
   <div class="product-info">
     <div class="product-title">{{product?.name}}</div>
@@ -29,10 +29,16 @@
 <div class="similar-products" *ngIf="similarProducts?.length">
   <h3>Vielleicht interessiert Sie</h3>
   <div class="similar-products-product-list">
-    <div class="similar-products-product-card" *ngFor="let similarProduct of similarProducts" (click)="viewProductDetail(similarProduct.id)">
-      <img [src]="similarProduct.imageUrl" alt="{{ similarProduct.name }}" class="similar-products-product-image">
+    <a [href]="'/product/' + similarProduct.id" class="similar-products-product-card" *ngFor="let similarProduct of similarProducts" (click)="viewProductDetail(similarProduct.id)">
+      <img src="img/{{similarProduct.imageUrl}}" alt="{{ similarProduct.name }}" class="similar-products-product-image">
       <div class="similar-products-product-name">{{ similarProduct.name }}</div>
       <div class="similar-products-product-price">{{ similarProduct.price | customCurrency }}</div>
-    </div>
+    </a>
+  </div>
+</div>
+
+<div class="modal" *ngIf="isModalOpen" (click)="closeModal()">
+  <div class="modal-content">
+    <img [src]="modalImageSrc" alt="Enlarged Product Image">
   </div>
 </div>

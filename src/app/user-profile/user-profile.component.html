@@ -1,4 +1,5 @@
 <!-- src/app/user-profile/user-profile.component.html -->
+<app-notification [message]="notificationMessage"></app-notification>
 <div class="user-profile-container">
   <h2>Kundenprofil</h2>
 
@@ -24,7 +25,6 @@
           <input type="email" id="email" [(ngModel)]="profile.email" name="email" [disabled]="!isEditing" required>
         </li>
       </ul>
-      <p *ngIf="message">{{ message }}</p>
       <button *ngIf="isEditing" type="button" [disabled]="!profileForm.form.valid" (click)="showPasswordModal()">Speichern</button>
     </form>
   </section>
@@ -55,8 +55,8 @@
             <label for="confirmNewPassword">Neues Passwort bestätigen:</label>
             <input type="password" id="confirmNewPassword" [(ngModel)]="confirmNewPassword" name="confirmPassword" required>
           </div>
-          <p *ngIf="message">{{ message }}</p>
-          <button class="change-password-button" type="submit" [disabled]="!passwordForm.form.valid || newPassword !== confirmNewPassword">Änderung abschließen</button>
+          <p class="error-message" *ngIf="message">{{ message }}</p>
+          <button class="change-password-button" type="submit" [disabled]="!passwordForm.form.valid">Änderung abschließen</button>
         </form>
       </div>
     </div>
@@ -73,7 +73,7 @@
         <div class="bestellung-details" *ngIf="isOrderExpanded(bestellung.id)">
           <ul>
             <li *ngFor="let item of bestellung.bestellungsCart.bestellungsCartItems" class="product-item">
-              <img [src]="item.product.imageUrl" alt="{{ item.product.name }}" class="product-image">
+              <img src="img/{{item.product.imageUrl}}" alt="{{ item.product.name }}" class="product-image">
               <span>{{ item.product.name }}</span>
               <span>Menge: {{item.quantity}}</span>
               <span>je {{ item.price | customCurrency }}</span>
@@ -94,6 +94,7 @@
           <label for="confirmOldPassword">Passwort:</label>
           <input type="password" id="confirmOldPassword" [(ngModel)]="password" name="confirmPassword" required>
         </div>
+        <p class="error-message" *ngIf="message">{{ message }}</p>
         <button class="confirm-password-button" type="submit" [disabled]="!confirmPasswordForm.form.valid">Bestätigen</button>
       </form>
     </div>

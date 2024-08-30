@@ -17,7 +17,7 @@ export class UserProfileComponent implements OnInit {
     lastUsedAddress: { street: '', city: '', postalCode: '', country: '', houseNumber: '', addressfirstName: '', addresslastName: '' },
     bestellungen: []
   }
-
+  notificationMessage: string = "";
   user: User = {email: '', firstName: '', lastName: '' };
   expandedOrders: Set<number> = new Set<number>();
 
@@ -41,7 +41,7 @@ export class UserProfileComponent implements OnInit {
     this.kundenId = this.kundenIdStr !== null ? parseInt(this.kundenIdStr, 10) : null;
     this.authService.getProfile(this.kundenId).subscribe({
       next: (data) => {
-        console.log('Profile data:', data); // Log the data element
+        //console.log('Profile data:', data); // Log the data element
         this.profile = data;
         this.user.id=data.id;
       },
@@ -67,17 +67,19 @@ export class UserProfileComponent implements OnInit {
     this.user.email= this.profile.email;
     this.authService.updateProfile(this.user, this.password).subscribe({
       next: () => {
-        console.log(this.user);
-        this.message = 'Profile updated successfully!';
+        //console.log(this.user);
+        this.notificationMessage = `Profil erfolgreich bearbeitet`;
+        setTimeout(() => this.notificationMessage = '', 3000); // Hide message after 3 seconds
         this.isEditing = false;
         localStorage.setItem('firstName', <string>this.user.firstName);
+        this.togglePasswordConfirmationModal();
         //localStorage.setItem('lastName', <string>this.profile.lastName);
         //localStorage.setItem('email', this.profile.email);
         this.appComponent.updateUserDetails();
       },
       error: (err) => {
-        console.error('Error updating profile', err);
-        this.message = 'Error updating profile';
+        //console.error('Error updating profile', err);
+        this.message = 'Das Passwort ist falsch';
       }
     });
   }
@@ -91,6 +93,7 @@ export class UserProfileComponent implements OnInit {
     if (this.showChangePasswordModal) {
       this.resetChangePasswordFields();
     }
+    this.message="";
   }
   resetChangePasswordFields() {
     this.oldPassword = '';
@@ -103,6 +106,7 @@ export class UserProfileComponent implements OnInit {
     if (this.showPasswordConfirmationModal) {
       this.resetPasswordField();
     }
+    this.message="";
   }
   resetPasswordField() {
     this.password = '';
@@ -114,25 +118,26 @@ export class UserProfileComponent implements OnInit {
 
   onChangePassword(): void {
     if (this.newPassword !== this.confirmNewPassword) {
-      this.message = 'New passwords do not match';
+      this.message = 'Das neue Passwort stimmt nicht überein';
       return;
     }
     this.authService.changePassword(this.kundenId, this.oldPassword, this.newPassword).subscribe({
 
       next: () => {
-        this.message = 'Password changed successfully!';
+        this.notificationMessage = `Passwort erfolgreich geändert`;
+        setTimeout(() => this.notificationMessage = '', 3000); // Hide message after 3 seconds
         this.toggleChangePasswordModal();
       },
       error: (err) => {
         //console.error('Error changing password', err);
-        this.message = 'Error changing password';
+        this.message = 'Altes Passwort stimmt nicht überein';
       }
     });
   }
 
   onConfirmPassword() {
     // Validate the current password and submit the form if valid
-      this.togglePasswordConfirmationModal();
+      //this.togglePasswordConfirmationModal();
       this.onSubmit();
       //this.message = 'Incorrect password';
     }

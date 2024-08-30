@@ -72,9 +72,10 @@ export class ProductListComponent implements OnInit {
       return matchesCategory && matchesPrice && matchesSearchTerm;
     });
   }
-  addToCart(product: Product): void {
+  /*addToCart(product: Product): void {
     if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
+      this.notificationMessage = `Melden Sie sich an, um das Produkt in den Wagen zu legen`;
+      setTimeout(() => this.notificationMessage = '', 3000); // Hide message after 3 seconds
     } else {
     this.warenkorbIdStr = localStorage.getItem('warenkorbId');
     this.warenkorbId = this.warenkorbIdStr !== null ? parseInt(this.warenkorbIdStr, 10) : null;
@@ -99,7 +100,6 @@ export class ProductListComponent implements OnInit {
 
   viewProductDetail(productId: number): void {
     this.router.navigate(['/product', productId]);
-  }
-
+  }*/
 }
 

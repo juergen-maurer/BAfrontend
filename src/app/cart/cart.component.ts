@@ -122,6 +122,8 @@ export class CartComponent implements OnInit {
 
 
   navigateToCheckout(): void {
-    this.router.navigate(['/checkout'], { queryParams: { warenkorbId: this.warenkorbId } });
+    this.router.navigate(['/checkout'], { queryParams: { warenkorbId: this.warenkorbId}}).then(() => {
+      window.location.reload();
+    });
   }
 }

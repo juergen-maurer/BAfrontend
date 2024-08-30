@@ -21,10 +21,12 @@
   Unter den aktuellen Filtereinstellungen wurden keine Produkte gefunden.
 </div>
 <div class="product-list">
-  <div class="product-card" *ngFor="let product of filteredProducts" (click)="viewProductDetail(product.id)">
-    <img class="product-image" src="{{product.imageUrl}}" alt="{{product.name}}">
+
+  <a [href]="'/product/' + product.id"  class="product-card" *ngFor="let product of filteredProducts" >
+    <img class="product-image" src="img/{{product.imageUrl}}" alt="{{product.name}}">
     <div class="product-name">{{product.name}}</div>
     <div class="product-price">{{product.price | customCurrency}}</div>
-    <button (click)="addToCart(product); $event.stopPropagation()">In den Warenkorb</button>
-  </div>
+    <!--<button (click)="addToCart(product); $event.stopPropagation()" >In den Warenkorb</button>-->
+  </a>
+
 </div>

@@ -19,6 +19,10 @@ export class ProductDetailsComponent implements OnInit {
   productQuantityInCart: number = 0;
   warenkorbId: number | null = null;
   warenkorbIdStr: string | null = null;
+  isModalOpen: boolean = false;
+  modalImageSrc: string = '';
+
+
 
 
   constructor(
@@ -58,7 +62,9 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   viewProductDetail(productId: number): void {
-    this.router.navigate(['/product', productId]);
+    this.router.navigate(['/product', productId]).then(() => {
+      window.location.reload();
+    });
   }
   addToCart(): void {
     const quantity = this.selectedQuantity === 'More' ? Number(this.customQuantity) : Number(this.selectedQuantity);
@@ -71,9 +77,18 @@ export class ProductDetailsComponent implements OnInit {
           setTimeout(() => this.notificationMessage = '', 3000); // Hide message after 3 seconds
         },
         error => {
-          this.notificationMessage = 'Failed to add product to cart.';
+          this.notificationMessage = 'Melden Sie sich an, um das Produkt in den Wagen zu legen';
+          setTimeout(() => this.notificationMessage = '', 3000); // Hide message after 3 seconds
         }
       );
     }
+  }
+  openModal(imageSrc: string): void {
+    this.modalImageSrc = imageSrc;
+    this.isModalOpen = true;
+  }
+
+  closeModal(): void {
+    this.isModalOpen = false;
   }
 }

@@ -16,6 +16,7 @@ import {AuthService} from "../services/auth.service";
 )
 export class CheckoutComponent {
   checkoutForm: FormGroup;
+  notificationMessage: string = "";
   orderDetails = {
     items: [] as Product[],
     total: 0,
@@ -37,6 +38,8 @@ export class CheckoutComponent {
   };*/
 
   warenkorbId: number | null = null;
+  isModalOpen: boolean = false; // Flag to track modal status
+
 
   constructor(
     private fb: FormBuilder,
@@ -73,7 +76,7 @@ export class CheckoutComponent {
     if (kundenId) {
       this.authService.getProfile(kundenId).subscribe({
         next: (profile: Profile) => {
-          console.log('Profile data:', profile); // Log the data element
+          //console.log('Profile data:', profile); // Log the data element
           if (profile.lastUsedAddress) {
             this.checkoutForm.patchValue({
               country: profile.lastUsedAddress.country,
@@ -110,7 +113,11 @@ export class CheckoutComponent {
     //this.orderDetails.total = cart.reduce((acc, product) => acc + (product.price * product.quantity), 0);
   }
 
-  submitOrder(): void {
+  toggleModal(): void{
+    this.isModalOpen = !this.isModalOpen;
+  }
+
+  confirmOrder(): void {
     if (this.checkoutForm.valid) {
       const orderDetails = {
         warenkorbId: this.warenkorbId,
@@ -119,17 +126,24 @@ export class CheckoutComponent {
         total: this.orderDetails.total,
         paymentMethod: this.mapPaymentMethod(this.checkoutForm.value.paymentMethod)
       };
-      console.log('Order details:', orderDetails);
+      //console.log('Order details:', orderDetails);
       this.orderService.submitOrder(orderDetails).subscribe({
         next: () => {
-          alert('Ihre Bestellung wurde erfolgreich abgeschlossen!');
-          this.router.navigate(['/']);
+          this.toggleModal();
+          this.notificationMessage = 'Ihre Bestellung wurde erfolgreich abgeschlossen!';
+          setTimeout(() => {
+            this.notificationMessage = '';
+            this.router.navigate(['/']);
+          }, 2000); // Wait for 3 seconds before navigating
         },
         error: () => {
           alert('Fehler beim Abschließen der Bestellung.');
         }
       });
     }
+  }
+  submitOrder(): void {
+    this.toggleModal();
   }
   private mapPaymentMethod(paymentMethod: string): string {
     switch (paymentMethod) {

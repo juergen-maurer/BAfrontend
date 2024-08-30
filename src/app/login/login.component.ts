@@ -13,6 +13,7 @@ import {AppComponent} from "../app.component";
 export class LoginComponent {
   email: string = '';
   password: string = '';
+  confirmPassword: string = '';
   firstName: string = '';
   lastName: string = '';
   isRegistering: boolean = false;
@@ -22,10 +23,15 @@ export class LoginComponent {
 
   toggleMode(): void {
     this.isRegistering = !this.isRegistering;
+    this.errorMessage="";
   }
 
   onSubmit(): void {
     if (this.isRegistering) {
+      if (this.password !== this.confirmPassword) {
+        this.errorMessage = 'Passwörter stimmen nicht überein';
+        return;
+      }
       const newUser: User = {
         firstName: this.firstName,
         lastName: this.lastName,
@@ -44,7 +50,7 @@ export class LoginComponent {
         },
         error => {
           if (error.status === 409) {
-            this.errorMessage = 'Email address already in use';
+            this.errorMessage = 'Email Adresse schon in Verwendung';
           } else {
             this.errorMessage = 'An error occurred during registration';
           }
@@ -64,7 +70,7 @@ export class LoginComponent {
         },
         error => {
           if (error.status === 401) {
-            this.errorMessage = 'Invalid email or password';
+            this.errorMessage = 'Falsche E-Mail oder Passwort';
           } else {
             this.errorMessage = 'An error occurred during registration';
           }

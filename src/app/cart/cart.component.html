@@ -6,7 +6,7 @@
   </div>
   <div class="cart-item-list">
     <div class="cart-item" *ngFor="let product of cart" (click)="viewProductDetail(product.id)">
-      <img src="{{product.imageUrl}}" alt="{{product.name}}">
+      <img class="product-image" src="img/{{product.imageUrl}}" alt="{{product.name}}">
       <div class="cart-item-title">{{product.name}}</div>
       <div class="cart-item-price">{{product.price | customCurrency}}</div>
       <input type="number" (click)="$event.stopPropagation()" [(ngModel)]="product.quantity" (change)="updateQuantityIfChanged(product)" min="1">

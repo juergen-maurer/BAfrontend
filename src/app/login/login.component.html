@@ -20,6 +20,10 @@
         <label for="password">Passwort:</label>
         <input type="password" id="password" [(ngModel)]="password" name="password" required>
       </div>
+      <div *ngIf="isRegistering" class="form-group">
+        <label for="confirmPassword">Passwort bestätigen:</label>
+        <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+      </div>
       <button type="submit" [disabled]="!loginForm.form.valid">{{ isRegistering ? 'Jetzt registrieren' : 'Login' }}</button>
     </form>
     <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>

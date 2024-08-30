@@ -2,7 +2,6 @@ import { Component, OnInit} from '@angular/core';
 import {SearchService} from "./services/search.service";
 import {Router} from "@angular/router";
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -45,7 +44,9 @@ export class AppComponent implements OnInit {
   }
 
   navigateToProfile(): void {
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/profile']).then(() => {
+      window.location.reload();
+    });
   }
 
   logout(): void {

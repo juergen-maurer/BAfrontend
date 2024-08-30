@@ -68,7 +68,9 @@ export class CartService {
       .set('cartId', warenkorbId || 0);
     // Senden der PUT-Anfrage mit den Parametern
     this.http.put(`${this.baseUrl}/update`, {}, { params }).subscribe({
-      next: () => console.log(`Produktmenge für Produkt ${productId} erfolgreich auf ${quantity} geändert.`),
+      next: () => {
+        //console.log(`Produktmenge für Produkt ${productId} erfolgreich auf ${quantity} geändert.`),
+      },
       error: (error) => console.error('Fehler beim Ändern der Produktmenge:', error)
     });
   }

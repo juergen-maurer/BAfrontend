@@ -1,4 +1,5 @@
 <!-- src/app/checkout/checkout.component.html -->
+<app-notification [message]="notificationMessage"></app-notification>
 <div class="checkout-container">
   <h2>Checkout</h2>
   <div class="checkout-content">
@@ -10,9 +11,10 @@
           <div class="form-group">
             <label for="country">Land:</label>
             <select id="country" formControlName="country" required>
-              <option value="Germany">Germany</option>
-              <option value="Austria">Austria</option>
-              <option value="Switzerland">Switzerland</option>
+              <option value="Germany">Deutschland</option>
+              <option value="Austria">Österreich</option>
+              <option value="Switzerland">Schweiz</option>
+              <option value="France">Frankreich</option>
               <!-- Add more countries as needed -->
             </select>
           </div>
@@ -68,6 +70,19 @@
         </li>
       </ul>
       <p>Gesamtpreis: {{ orderDetails.total | customCurrency }}</p>
+    </div>
+  </div>
+
+  <!-- Modal for order confirmation -->
+  <div class="modal" *ngIf="isModalOpen" (click)="toggleModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <span class="close" (click)="toggleModal()">&times;</span>
+      <h2>Bestellung bestätigen</h2>
+      <p>Möchten Sie die Bestellung wirklich abschließen?</p>
+      <div class="modal-buttons">
+        <button class="confirm" (click)="confirmOrder()">Ja</button>
+        <button class="cancel" (click)="toggleModal()">Nein</button>
+      </div>
     </div>
   </div>
 </div>
