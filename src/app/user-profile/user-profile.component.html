@@ -75,8 +75,8 @@
             <li *ngFor="let item of bestellung.bestellungsCart.bestellungsCartItems" class="product-item">
               <img src="img/{{item.product.imageUrl}}" alt="{{ item.product.name }}" class="product-image">
               <span>{{ item.product.name }}</span>
-              <span>Menge: {{item.quantity}}</span>
-              <span>je {{ item.price | customCurrency }}</span>
+              <span class="item-quantity">Menge: {{item.quantity}}</span>
+              <span class="item-price">je {{ item.price | customCurrency }}</span>
             </li>
           </ul>
         </div>

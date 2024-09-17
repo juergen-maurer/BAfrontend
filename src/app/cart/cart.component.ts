@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
 import {CartService} from "../services/cart.service";
 import {SearchService} from "../services/search.service";
-import {Router} from "@angular/router";
+import {NavigationExtras, Router} from "@angular/router";
 
 @Component({
   selector: 'app-cart',
@@ -122,8 +122,9 @@ export class CartComponent implements OnInit {
 
 
   navigateToCheckout(): void {
-    this.router.navigate(['/checkout'], { queryParams: { warenkorbId: this.warenkorbId}}).then(() => {
-      window.location.reload();
-    });
+    const navigationExtras: NavigationExtras = {
+      state: { warenkorbId: this.warenkorbId }
+    };
+    this.router.navigate(['/checkout'], navigationExtras);
   }
 }

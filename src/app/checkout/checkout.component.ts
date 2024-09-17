@@ -59,12 +59,13 @@ export class CheckoutComponent {
       houseNumber: ['', Validators.required],
       paymentMethod: ['Credit Card', Validators.required]
     });
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras?.state) {
+      this.warenkorbId = navigation.extras.state['warenkorbId'];
+    }
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.warenkorbId = params['warenkorbId'] ? parseInt(params['warenkorbId'], 10) : null;
-    });
     this.loadCartDetails();
     this.loadUserProfile();
   }

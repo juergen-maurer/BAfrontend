@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {SearchService} from "./services/search.service";
 import {Router} from "@angular/router";
 
@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  title = 'untitled';
   searchTerm: string = '';
   firstName: string | null = null;
   lastName: string | null = null;
@@ -61,5 +62,12 @@ export class AppComponent implements OnInit {
   }
   toggleDropdown(): void {
     this.isDropdownVisible = !this.isDropdownVisible;
+  }
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.nav-link')) {
+      this.isDropdownVisible = false;
+    }
   }
 }

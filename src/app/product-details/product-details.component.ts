@@ -49,6 +49,7 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
+
   private updateProductQuantityInCart(productId: number): void {
     this.cartService.getCartDetails(this.warenkorbId).subscribe(cartResponse => {
       const productInCart = cartResponse.cartItems.find(item => item.product.id === productId);
