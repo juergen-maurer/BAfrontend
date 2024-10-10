@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import {User} from "../User";
 import {AppComponent} from "../app.component";
-import {Address, Profile} from "../Profile";
+import {Profile} from "../Profile";
 
 
 @Component({
